@@ -1,21 +1,6 @@
 __author__ = 'saipc'
 
-import requests
-from bs4 import BeautifulSoup
-
-def get_prods_html(url, method, headers=None):
-    if str(method).lower() == 'get':
-        r = requests.get(url, None, headers=headers)
-    else:
-        r = requests.post(url, None,headers=headers)
-    return r.text
-
-def soupify(text):
-    try:
-        s = BeautifulSoup(text, 'lxml')
-    except Exception as e:
-        return None
-    return s
+from functions import get_prods_html
 
 if __name__ == '__main__':
     headers = {
@@ -33,7 +18,5 @@ if __name__ == '__main__':
     url = 'https://www.ribbon-gifts.com/11906OPNCONSAmway/shop/treasure/_/N-118025?No=0&Nrpp=48'
 
     text = get_prods_html(url, 'get', headers)
-    html = soupify(text)
-    print(html)
     with open('prod.html', 'w') as ht:
-        ht.write(html.encode('ascii', 'ignore'))
+        ht.write(text.encode('ascii', 'ignore'))
